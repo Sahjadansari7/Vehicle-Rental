@@ -13,18 +13,17 @@ connectDB();
 
 const app = express();
 
-// ✅ ALLOWED ORIGINS - YAHAN DEFINE KARO
+// ✅ ALLOWED ORIGINS - SAHI URL DAALO
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'https://vehicle-rental-tov5.vercel.app',
-  'https://vehicle-rental-1csl.onrender.com'
+  'https://vehicle-rental-lcsl.onrender.com'  // ← YAHAN SAHI KARO
 ];
 
 // Enable CORS with dynamic settings
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
@@ -37,7 +36,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// ✅ Preflight requests handle karo
+// Preflight requests handle karo
 app.options('*', cors());
 
 // Body parser middlewares
