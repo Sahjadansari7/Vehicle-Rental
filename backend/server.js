@@ -14,14 +14,22 @@ connectDB();
 const app = express();
 
 // Enable CORS with dynamic settings matching the CLIENT_URL
-const allowedOrigin = process.env.CLIENT_URL || 'http://localhost:5173';
-app.use(
-  cors({
-    origin: allowedOrigin,
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://vehicle-rental-tov5.vercel.app',
+  'https://vehicle-rental-1csl.onrender.com'
+];
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 // Body parser middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
