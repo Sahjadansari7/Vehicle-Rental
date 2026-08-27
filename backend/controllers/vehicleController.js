@@ -72,9 +72,7 @@ const createVehicle = async (req, res) => {
   try {
     const { name, type, brand, model, fuelType, rentPerDay, fuelEfficiency } = req.body;
 
-    const imageUrl = req.file
-      ? `${req.protocol}://${req.get('host')}/uploads/vehicles/${req.file.filename}`
-      : null;
+    const imageUrl = req.file ? req.file.path : null;
 
     const vehicle = await Vehicle.create({
       name,
@@ -105,7 +103,7 @@ const updateVehicle = async (req, res) => {
     if (updateData.fuelEfficiency) updateData.fuelEfficiency = Number(updateData.fuelEfficiency);
 
     if (req.file) {
-      updateData.image = `${req.protocol}://${req.get('host')}/uploads/vehicles/${req.file.filename}`;
+      updateData.image = req.file.path;
     }
 
     const oldVehicle = await Vehicle.findById(req.params.id);
